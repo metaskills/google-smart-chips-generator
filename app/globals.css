@@ -91,6 +91,33 @@
   animation: gentle-bounce 2s ease-in-out infinite;
 }
 
+@keyframes fall-and-rotate-clockwise {
+  from {
+    transform: translateY(0) rotate(0deg);
+  }
+  to {
+    transform: translateY(110vh) rotate(360deg);
+  }
+}
+
+@keyframes fall-and-rotate-counter-clockwise {
+  from {
+    transform: translateY(0) rotate(0deg);
+  }
+  to {
+    transform: translateY(110vh) rotate(-360deg);
+  }
+}
+
+@keyframes fall-straight {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(110vh);
+  }
+}
+
 /* Oven Background with Opacity */
 .oven-background {
   background-image: url("/images/oven.png");
@@ -122,19 +149,4 @@
 
 .playful-select-item {
   @apply text-xl font-semibold focus:bg-amber-200;
-}
-
-/* Cookie Background */
-.cookie-background::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url("/images/cookie.png");
-  background-size: 200px;
-  opacity: 0.05;
-  z-index: -1;
-  background-repeat: repeat;
 }

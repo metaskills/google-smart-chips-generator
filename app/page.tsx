@@ -6,11 +6,22 @@ import { SmartChip, type ChipType, chipConfig } from "@/components/ui/smart-chip
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
+import { FallingCookies } from "@/components/falling-cookies"
+import { FallingIcons } from "@/components/falling-icons"
 
 export default function ChipGenerator() {
   const [label, setLabel] = useState("")
   const [type, setType] = useState<ChipType>("docs")
   const [key, setKey] = useState(0) // To re-trigger animation
+
+  const placeholderMap: Record<ChipType, string> = {
+    docs: "Your Google Docs Title",
+    sheets: "Your Google Sheets Title",
+    slides: "Your Google Slides Title",
+    forms: "Your Google Forms Title",
+    drawings: "Your Google Drawings Title",
+    vids: "Your YouTube Video Title",
+  }
 
   // Re-trigger animation whenever the label or type changes
   useEffect(() => {
@@ -21,9 +32,11 @@ export default function ChipGenerator() {
 
   return (
     <div
-      className="bg-[#FFFBEB] min-h-screen flex flex-col items-center justify-center p-4 font-sans relative cookie-background"
+      className="isolate bg-[#FFFBEB] min-h-screen flex flex-col items-center justify-center p-4 font-sans relative overflow-hidden"
       style={{ fontFamily: "var(--font-patrick-hand)" }}
     >
+      <FallingCookies />
+      <FallingIcons />
       <header className="text-center mb-8 w-full">
         <h1 className="text-6xl md:text-8xl font-bold text-amber-900 tracking-tight">Google Smart Chip Generator</h1>
         <div className="text-2xl md:text-3xl text-amber-800 mt-8 mx-auto max-w-6xl px-4 text-center">
@@ -40,7 +53,7 @@ export default function ChipGenerator() {
               <SelectTrigger className="playful-select-trigger">
                 <SelectValue placeholder="Select a flavor" />
               </SelectTrigger>
-              <SelectContent className="playful-select-content">
+              <SelectContent className="playful-select-content w-80">
                 {Object.entries(chipConfig).map(([key, { name, icon }]) => (
                   <SelectItem key={key} value={key} className="playful-select-item">
                     <div className="flex items-center gap-3">
@@ -56,7 +69,7 @@ export default function ChipGenerator() {
             <Input
               value={label}
               onChange={(e) => setLabel(e.target.value)}
-              placeholder="Your Google Document Title"
+              placeholder={placeholderMap[type]}
               className="playful-input"
             />
           </div>

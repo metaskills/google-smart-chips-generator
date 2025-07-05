@@ -30,6 +30,83 @@ export default function ChipGenerator() {
     }
   }, [label, type])
 
+  const downloadChip = async () => {
+    if (!label) return
+
+    try {
+      const canvas = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')
+      if (!ctx) return
+
+      // Calculate dimensions at 2x resolution
+      const scale = 2
+      const fontSize = 14 * scale
+      const iconSize = 16 * scale
+      const padding = 8 * scale
+      const gap = 6 * scale
+      const height = 24 * scale
+      
+      // Measure text to calculate width
+      ctx.font = `500 ${fontSize}px Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`
+      const textWidth = ctx.measureText(label).width
+      const width = iconSize + gap + textWidth + (padding * 2)
+      
+      canvas.width = width
+      canvas.height = height
+      
+      // Clear canvas with transparent background
+      ctx.clearRect(0, 0, width, height)
+      
+      // Draw rounded rectangle background
+      const radius = height / 2
+      ctx.fillStyle = '#E9EAED'
+      ctx.beginPath()
+      ctx.roundRect(0, 0, width, height, radius)
+      ctx.fill()
+      
+      // Load and draw icon
+      const iconImg = document.createElement('img')
+      iconImg.crossOrigin = 'anonymous'
+      
+      await new Promise<void>((resolve, reject) => {
+        iconImg.onload = () => {
+          try {
+            // Draw icon
+            const iconY = (height - iconSize) / 2
+            ctx.drawImage(iconImg, padding, iconY, iconSize, iconSize)
+            
+            // Draw text
+            ctx.fillStyle = '#1F2937'
+            ctx.font = `500 ${fontSize}px Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`
+            ctx.textAlign = 'left'
+            ctx.textBaseline = 'middle'
+            const textX = padding + iconSize + gap
+            const textY = height / 2
+            ctx.fillText(label, textX, textY)
+            
+            // Download as PNG
+            const link = document.createElement('a')
+            link.download = `${label.replace(/[^a-zA-Z0-9]/g, '_')}-chip.png`
+            link.href = canvas.toDataURL('image/png')
+            link.click()
+            
+            resolve()
+          } catch (error) {
+            reject(error)
+          }
+        }
+        
+        iconImg.onerror = () => {
+          reject(new Error('Failed to load icon'))
+        }
+        
+        iconImg.src = window.location.origin + chipConfig[type].icon
+      })
+    } catch (error) {
+      console.error('Error downloading chip:', error)
+    }
+  }
+
   return (
     <div
       className="isolate bg-[#FFFBEB] min-h-screen flex flex-col items-center justify-center p-4 font-sans relative overflow-hidden"
@@ -90,6 +167,7 @@ export default function ChipGenerator() {
         <div className="mt-4 text-center">
           <Button
             disabled={!label}
+            onClick={downloadChip}
             className="bg-amber-800 hover:bg-amber-900 text-white font-bold text-3xl py-8 px-10 rounded-full shadow-lg transition-all duration-300 disabled:bg-gray-400 disabled:shadow-none disabled:cursor-not-allowed transform disabled:scale-100 hover:scale-105"
           >
             <Image

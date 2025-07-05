@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px">
+  <g fill="#A142F4" transform="matrix(1.714286, 0, 0, 1.714286, -1230.857178, -870.857178)">
+    <title>Group</title>
+    <path d="M723 513.146v3.706l3-1.852z"/>
+    <path d="M730.5 508h-11c-.827 0-1.5.673-1.5 1.5v11c0 .827.673 1.5 1.5 1.5h11c.827 0 1.5-.673 1.5-1.5v-11c0-.827-.673-1.5-1.5-1.5zm-9 11.5v-9l7.5 4.5-7.5 4.5z"/>
+  </g>
+</svg>

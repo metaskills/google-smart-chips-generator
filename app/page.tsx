@@ -77,7 +77,7 @@ export default function ChipGenerator() {
 
         {/* Preview */}
         <div className="relative w-full aspect-[4/3] oven-background">
-          <div className="absolute left-1/2 top-[58%] transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
+          <div className="absolute left-1/2 top-[53%] transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
             {label && (
               <div key={key} className="animate-pop-out">
                 <SmartChip type={type} label={label} className="text-lg p-2 h-8" />
